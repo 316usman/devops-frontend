@@ -15,7 +15,7 @@
         <button type="submit">Submit</button>
     </form>
 
-    
+
     <script>
         document.getElementById('dataForm').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -29,7 +29,7 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ input1: input1, input2: input2, input3: input3 })
+                body: JSON.stringify({ "input1": input1, "input2": input2, "input3": input3 })
             })
             .then(response => response.json())
             .then(data => {
