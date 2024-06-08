@@ -12,16 +12,19 @@ jobs:
 
     steps:
     - name: Create PEM file from secret
-      run: echo "$PEM_FILE" > /home/ubuntu/devops-backend.pem
+      run: |
+        mkdir -p $HOME/.ssh
+        echo "$PEM_FILE" > $HOME/.ssh/devops-backend.pem
       env:
         PEM_FILE: ${{ secrets.PEM_FILE }}
 
     - name: Ensure correct permissions for PEM file
-      run: chmod 400 /home/ubuntu/devops-backend.pem
+      run: chmod 400 $HOME/.ssh/devops-backend.pem
 
-    - name: SSH to EC2 Instance
+    - name: Debug SSH Connection
       run: |
-        ssh -o StrictHostKeyChecking=no -i "/home/ubuntu/devops-backend.pem" ubuntu@ec2-54-198-211-51.compute-1.amazonaws.com << 'EOF'
+        ssh -vvv -o StrictHostKeyChecking=no -i $HOME/.ssh/devops-backend.pem ubuntu@ec2-52-91-225-212.compute-1.amazonaws.com << 'EOF'
+          echo "SSH Connected"
           sudo docker stop flask-container-frontend || true
           sudo docker rm flask-container-frontend || true
           sudo docker rmi $(sudo docker images -q) || true
