@@ -12,18 +12,13 @@ jobs:
 
     runs-on: self-hosted
 
-    steps:
+  steps:
     - name: SSH to EC2 Instance
-      uses: appleboy/ssh-action@master
-      with:
-        host: 52.91.225.212
-        username: ubuntu
-        key: ${{ secrets.EC2_KEY_PAIR }}
-        port: 22
-        script: |
+      run: |
+        ssh -i /home/ubuntu/devops-backend.pem ubuntu@52.91.225.212 << EOF
           sudo docker stop flask-container-frontend || true
           sudo docker rm flask-container-frontend || true
           sudo docker rmi $(sudo docker images -q) || true
           sudo docker pull 316usman/flask-app-frontend:latest
           sudo docker run -d -p 80:80 --name flask-container-frontend 316usman/flask-app-frontend:latest
-        args: -v
+        EOF
