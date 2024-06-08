@@ -26,3 +26,4 @@ jobs:
           sudo docker rmi $(sudo docker images -q) || true
           sudo docker pull 316usman/flask-app-frontend:latest
           sudo docker run -d -p 80:80 --name flask-container-frontend 316usman/flask-app-frontend:latest
+        args: -v
