@@ -21,7 +21,7 @@ jobs:
 
     - name: SSH to EC2 Instance
       run: |
-        ssh -o StrictHostKeyChecking=no -i "/home/ubuntu/devops-backend.pem" ubuntu@ec2-52-91-225-212.compute-1.amazonaws.com << 'EOF'
+        ssh -o StrictHostKeyChecking=no -i "/home/ubuntu/devops-backend.pem" ubuntu@ec2-54-198-211-51.compute-1.amazonaws.com << 'EOF'
           sudo docker stop flask-container-frontend || true
           sudo docker rm flask-container-frontend || true
           sudo docker rmi $(sudo docker images -q) || true
