@@ -26,7 +26,7 @@ jobs:
 
     - name: Debug SSH Connection
       run: |
-        ssh -vvv -o StrictHostKeyChecking=no -i $RUNNER_TEMP/.ssh/devops-backend.pem ubuntu@10.0.4.101 << 'EOF'
+        ssh -vvv -o StrictHostKeyChecking=no -i $RUNNER_TEMP/.ssh/devops-backend.pem ubuntu@54.198.211.51 << 'EOF'
           echo "SSH Connected"
           sudo docker stop flask-container-frontend || true
           sudo docker rm flask-container-frontend || true

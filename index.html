@@ -15,7 +15,7 @@
         <button type="submit">Submit</button>
     </form>
 
-    
+
     <script>
         document.getElementById('dataForm').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -24,7 +24,7 @@
             var input2 = document.getElementById('input2').value;
             var input3 = document.getElementById('input3').value;
 
-            fetch('http://10.0.5.211:4000/add_data', {
+            fetch('http://34.203.38.139:4000/add_data', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
