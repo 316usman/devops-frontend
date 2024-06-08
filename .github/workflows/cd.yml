@@ -13,17 +13,20 @@ jobs:
     steps:
     - name: Create PEM file from secret
       run: |
-        sudo mkdir -p $HOME/.ssh
-        sudo echo "$PEM_FILE" > $HOME/.ssh/devops-backend.pem
+        mkdir -p $RUNNER_TEMP/.ssh
+        echo "$PEM_FILE" > $RUNNER_TEMP/.ssh/devops-backend.pem
       env:
         PEM_FILE: ${{ secrets.PEM_FILE }}
+        RUNNER_TEMP: ${{ runner.temp }}
 
     - name: Ensure correct permissions for PEM file
-      run: sudo chmod 400 $HOME/.ssh/devops-backend.pem
+      run: chmod 400 $RUNNER_TEMP/.ssh/devops-backend.pem
+      env:
+        RUNNER_TEMP: ${{ runner.temp }}
 
     - name: Debug SSH Connection
       run: |
-        ssh -vvv -o StrictHostKeyChecking=no -i $HOME/.ssh/devops-backend.pem ubuntu@ec2-54-198-211-51.compute-1.amazonaws.com << 'EOF'
+        ssh -vvv -o StrictHostKeyChecking=no -i $RUNNER_TEMP/.ssh/devops-backend.pem ubuntu@ec2-54.198.211.51.compute-1.amazonaws.com << 'EOF'
           echo "SSH Connected"
           sudo docker stop flask-container-frontend || true
           sudo docker rm flask-container-frontend || true
@@ -31,3 +34,5 @@ jobs:
           sudo docker pull 316usman/flask-app-frontend:latest
           sudo docker run -d -p 80:80 --name flask-container-frontend 316usman/flask-app-frontend:latest
         EOF
+      env:
+        RUNNER_TEMP: ${{ runner.temp }}
