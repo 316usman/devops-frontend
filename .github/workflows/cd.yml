@@ -13,13 +13,16 @@ jobs:
     runs-on: self-hosted
 
     steps:
-    - name: Stop Old Container if running
-      run: sudo docker stop flask-container-frontend || true
-    - name: Delete Old docker container
-      run: sudo docker rm flask-container-frontend || true
-    - name: Delete Old docker Image
-      run: sudo docker rmi $(sudo docker images -q) || true
-    - name: Pull Docker image
-      run: sudo docker pull 316usman/flask-app-frontend:latest
-    - name: Run Docker Container
-      run: sudo docker run -d -p 80:80 --name flask-container-frontend 316usman/flask-app-frontend:latest
+    - name: SSH to EC2 Instance
+      uses: appleboy/ssh-action@master
+      with:
+        host: 52.91.225.212
+        username: ubuntu
+        key: ${{ secrets.EC2_KEY_PAIR }}
+        port: 22
+        script: |
+          sudo docker stop flask-container-frontend || true
+          sudo docker rm flask-container-frontend || true
+          sudo docker rmi $(sudo docker images -q) || true
+          sudo docker pull 316usman/flask-app-frontend:latest
+          sudo docker run -d -p 80:80 --name flask-container-frontend 316usman/flask-app-frontend:latest
