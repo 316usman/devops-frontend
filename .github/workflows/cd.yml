@@ -23,7 +23,7 @@ jobs:
 
     - name: Debug SSH Connection
       run: |
-        ssh -vvv -o StrictHostKeyChecking=no -i $HOME/.ssh/devops-backend.pem ubuntu@ec2-52-91-225-212.compute-1.amazonaws.com << 'EOF'
+        ssh -vvv -o StrictHostKeyChecking=no -i $HOME/.ssh/devops-backend.pem ubuntu@ec2-54-198-211-51.compute-1.amazonaws.com << 'EOF'
           echo "SSH Connected"
           sudo docker stop flask-container-frontend || true
           sudo docker rm flask-container-frontend || true
