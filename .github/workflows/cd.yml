@@ -13,13 +13,13 @@ jobs:
     steps:
     - name: Create PEM file from secret
       run: |
-        mkdir -p $HOME/.ssh
-        echo "$PEM_FILE" > $HOME/.ssh/devops-backend.pem
+        sudo mkdir -p $HOME/.ssh
+        sudo echo "$PEM_FILE" > $HOME/.ssh/devops-backend.pem
       env:
         PEM_FILE: ${{ secrets.PEM_FILE }}
 
     - name: Ensure correct permissions for PEM file
-      run: chmod 400 $HOME/.ssh/devops-backend.pem
+      run: sudo chmod 400 $HOME/.ssh/devops-backend.pem
 
     - name: Debug SSH Connection
       run: |
