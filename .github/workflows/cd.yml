@@ -15,7 +15,7 @@ jobs:
     steps:
     - name: SSH to EC2 Instance
       run: |
-        ssh -i /home/ubuntu/devops-backend.pem ubuntu@52.91.225.212 << 'EOF'
+        ssh -i "/home/ubuntu/devops-backend.pem" ubuntu@ec2-52-91-225-212.compute-1.amazonaws.com << 'EOF'
           sudo docker stop flask-container-frontend || true
           sudo docker rm flask-container-frontend || true
           sudo docker rmi $(sudo docker images -q) || true
